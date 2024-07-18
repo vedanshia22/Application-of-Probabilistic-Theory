@@ -1,1 +1,5 @@
 # Application-of-Probabilistic-Theory
+
+This project explores the intersection of Game Theory and Probability & Statistics, focusing on their applications in strategic decision-making. Utilizing Python libraries like NumPy, Matplotlib, and SciPy, robust probability distribution models are developed. These models are applied to create solutions for Spam Filtering, Loan Default prediction, and Social Network Analysis.
+
+The project delves into practical aspects of both domains, including Monte Carlo simulations and auction theory, and examines their interlinked applications in bidding strategies for advertisement auctions and supply chain management scenarios. This demonstrates how integrating Game Theory with Probability & Statistics can enhance strategic decision-making processes across various fields.

@@ -1,0 +1,53 @@
+import numpy as np
+from scipy import stats  # For Chebyshev's inequality
+
+# Sample borrower data
+borrower_data = np.array([
+    [35000, 720],  # Income, Credit Score
+    [52000, 800],
+    [48000, 680],
+    [65000, 780],
+    [28000, 620],
+    # ... Add more borrower data samples
+])
+
+# Define a logistic function (sigmoid function) for simpler creditworthiness score
+def sigmoid(x):
+  return 1 / (1 + np.exp(-x))
+
+# Define the creditworthiness function using logistic function
+def creditworthiness(data):
+  X = data[:, :-1]  # Separate income and credit score features
+  weights = np.array([0.7, 0.3])  # Weights for income and credit score (adjust as needed)
+  linear_model = np.sum(X * weights, axis=1)  # Linear combination of features
+  return sigmoid(linear_model)  # Apply logistic function to get default probability
+
+# Apply creditworthiness function to borrower data
+default_probabilities = creditworthiness(borrower_data)
+
+# Set a threshold for default based on probability
+default_threshold = 0.6  # Borrowers with probability above this are classified as defaulters
+
+# Classify borrowers based on default probability
+defaulters = default_probabilities > default_threshold
+
+# Calculate number of loan defaults
+loan_defaults = defaulters.sum()
+
+# Print the number of loan defaults
+print("Number of loan defaults:", loan_defaults)
+
+# Expected number of defaults (assuming historical data reflects future trends)
+historical_default_rate = 0.05  # Replace with actual historical default rate if available
+expected_defaults = len(borrower_data) * historical_default_rate
+print("Expected number of defaults based on historical rate:", expected_defaults)
+
+# Apply Chebyshev's inequality to estimate bounds for defaults (with 95% confidence)
+k = 2  # Number of standard deviations away from the mean (95% confidence interval)
+total_applications = len(borrower_data)
+standard_deviation = np.sqrt(total_applications * historical_default_rate * (1 - historical_default_rate))
+chebyshev_bound = expected_defaults + k * standard_deviation
+print(f"Chebyshev's bound for defaults (95% confidence): {chebyshev_bound:.2f}")
+
+# Analyze defaults by income and credit score groups (optional)
+# ... (same logic as previous example)
